@@ -1,0 +1,32 @@
+# platform/networking/cilium/cilium-installation.yaml
+apiVersion: helm.crossplane.io/v1beta1
+kind: Release
+metadata:
+  name: cilium
+spec:
+  providerConfigRef:
+    name: helm-provider
+  forProvider:
+    chart:
+      name: cilium
+      repository: https://helm.cilium.io/
+      version: 1.14.0
+    namespace: kube-system
+    values:
+      kubeProxyReplacement: "strict"
+      k8sServiceHost: "${KUBERNETES_SERVICE_HOST}"
+      k8sServicePort: "${KUBERNETES_SERVICE_PORT}"
+      ipam:
+        mode: "kubernetes"
+      hubble:
+        enabled: true
+        relay:
+          enabled: true
+        ui:
+          enabled: true
+      ingressController:
+        enabled: true
+        default: true
+      l7Proxy: true
+      bpf:
+        masquerade: true

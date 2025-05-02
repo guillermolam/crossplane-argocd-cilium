@@ -1,0 +1,37 @@
+# applications/examples/web-app-with-cilium.yaml
+apiVersion: kubernetes.crossplane.io/v1alpha1
+kind: Object
+metadata:
+  name: app-ingress
+spec:
+  forProvider:
+    manifest:
+      apiVersion: networking.k8s.io/v1
+      kind: Ingress
+      metadata:
+        name: app-ingress
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-prod"
+          # OAuth annotations
+          cilium.io/auth-type: "oauth2"
+          cilium.io/auth-realm: "Okta Authentication"
+          cilium.io/auth-url: "/oauth2/auth"
+          cilium.io/auth-signin: "/oauth2/start?rd=$request_uri"
+          cilium.io/auth-proxy: "oauth2-proxy:4180"
+      spec:
+        ingressClassName: cilium
+        tls:
+        - hosts:
+          - your-app.example.com
+          secretName: your-app-tls
+        rules:
+        - host: your-app.example.com
+          http:
+            paths:
+            - path: /
+              pathType: Prefix
+              backend:
+                service:
+                  name: your-app-service
+                  port:
+                    number: 80

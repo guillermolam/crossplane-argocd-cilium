@@ -1,0 +1,40 @@
+apiVersion: kubernetes.crossplane.io/v1alpha1
+kind: Object
+metadata:
+  name: cilium-ingress-config
+spec:
+  forProvider:
+    manifest:
+      apiVersion: cilium.io/v2
+      kind: CiliumIngress
+      metadata:
+        name: cilium-ingress-default
+      spec:
+        loadBalancerMode: shared
+        ingressClassName: cilium
+        defaultAction: redirect
+        tls:
+          termination: edge
+          minVersion: VersionTLS12
+          secretName: cilium-ingress-tls
+        rules:
+          - host: your-app.example.com
+            http:
+              paths:
+                - path: /
+                  pathType: Prefix
+                  backend:
+                    service:
+                      name: your-app-service
+                      port:
+                        number: 80
+          - host: your-app.example.com
+            https:
+              paths:
+                - path: /
+                  pathType: Prefix
+                  backend:
+                    service:
+                      name: your-app-service
+                      port:
+                        number: 443

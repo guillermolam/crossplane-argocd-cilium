@@ -1,0 +1,49 @@
+crossplane-infra/
+├── README.md
+├── clusters/
+│   ├── aws-eks-swiss/
+│   │   ├── cluster.yaml
+│   │   ├── network.yaml
+│   │   └── nodegroups.yaml
+│   └── azure-aks-swiss/
+│       ├── cluster.yaml
+│       ├── resource-group.yaml
+│       └── network.yaml
+├── providers/
+│   ├── aws/
+│   │   ├── kustomization.yaml
+│   │   ├── provider.yaml
+│   │   └── providerconfig.yaml
+│   ├── azure/
+│   │   ├── kustomization.yaml
+│   │   ├── provider.yaml
+│   │   └── providerconfig.yaml
+│   └── helm/
+│       ├── kustomization.yaml
+│       ├── provider.yaml
+│       └── providerconfig.yaml
+├── platform/
+│   ├── networking/
+│   │   ├── cilium/
+│   │   │   ├── cilium-installation.yaml
+│   │   │   ├── hubble.yaml
+│   │   │   └── cilium-ingress.yaml
+│   │   └── network-policies/
+│   │       ├── default-deny.yaml
+│   │       └── allow-ingress.yaml
+│   ├── cert-manager/
+│   │   ├── cert-manager.yaml
+│   │   └── cluster-issuer.yaml
+│   └── security/
+│       ├── oauth2-proxy.yaml
+│       └── okta-integration.yaml
+├── compositions/
+│   ├── definition.yaml
+│   └── cilium-cluster-composition.yaml
+├── applications/
+│   ├── claim-template.yaml
+│   └── examples/
+│       └── web-app-with-cilium.yaml
+└── gitops/
+    ├── flux/
+    └── argocd/
