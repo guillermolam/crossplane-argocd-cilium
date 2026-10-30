@@ -32,3 +32,31 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+
+# >>> repo-guardrails (managed: edits inside this block are overwritten) >>>
+# Private key material and live credentials
+**/private-keys-v1.d/
+**/openpgp-revocs.d/
+**/id_rsa
+**/id_ecdsa
+**/id_ed25519
+**/id_dsa
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+**/kube/config
+**/.kube/config
+**/.aws/credentials
+**/.oci/
+.terraform/
+*.tfstate
+*.tfstate.*
+.env
+.env.*
+!.env.example
+!*.op
+.DS_Store
+# <<< repo-guardrails <<<
